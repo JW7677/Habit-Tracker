@@ -213,6 +213,27 @@
     }
     .add-btn:hover { opacity: 0.88; }
 
+    /* Add form schedule type */
+    .add-sched-row { display: flex; flex-direction: column; gap: 4px; }
+    .add-sched-types { display: flex; gap: 4px; flex-wrap: wrap; }
+    .add-sched-type-btn {
+      padding: 3px 8px; border-radius: 99px;
+      border: 1.5px solid #C5D8E8; background: white;
+      font-size: 0.68rem; font-weight: 600;
+      cursor: pointer; color: #aaa; font-family: inherit; transition: all 0.15s;
+    }
+    .add-sched-type-btn.on { background: #7A9EC6; border-color: #7A9EC6; color: white; }
+    .add-sched-type-btn:hover:not(.on) { border-color: #96B5D5; color: #7A9EC6; }
+    .add-month-sel { display: flex; flex-wrap: wrap; gap: 3px; }
+    .add-mday-btn {
+      width: 22px; height: 22px; border-radius: 5px;
+      border: 1.5px solid #C5D8E8; background: white;
+      font-size: 0.6rem; font-weight: 600;
+      cursor: pointer; color: #bbb; font-family: inherit; transition: all 0.15s;
+    }
+    .add-mday-btn.on { background: #7A9EC6; border-color: #7A9EC6; color: white; }
+    .add-mday-btn:hover:not(.on) { border-color: #96B5D5; color: #7A9EC6; }
+
     /* Empty state */
     .empty-state { text-align: center; padding: 40px 20px; color: #aaa; }
     .empty-state .emoji { font-size: 2.5rem; }
@@ -261,6 +282,95 @@
     .edit-cancel-btn:hover { background: #e5e4f0; color: #666; }
     tr.editing-row td { background: #f2f7fd !important; }
 
+    /* ── Intention bar ── */
+    .intention-bar {
+      background: white; border-radius: 10px;
+      padding: 10px 16px; margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      cursor: pointer; transition: box-shadow 0.2s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .intention-bar:hover { box-shadow: 0 3px 14px rgba(122,158,198,0.18); }
+    .intention-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .intention-text-area { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; }
+    .intention-label { font-size: 0.65rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+    .intention-today {
+      font-size: 0.92rem; color: #4a5568;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .intention-today.empty { color: #bbb; font-style: normal; }
+    .intention-edit-hint { font-size: 0.7rem; color: #C5D8E8; flex-shrink: 0; }
+
+    /* Intention modal */
+    .intention-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .intention-modal-overlay.hidden { display: none; }
+    .intention-modal {
+      background: white; border-radius: 16px; padding: 24px;
+      width: 100%; max-width: 480px; box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      max-height: 90vh; overflow-y: auto;
+    }
+    .intention-modal h2 { font-size: 1.05rem; font-weight: 700; color: #1e1e2e; margin-bottom: 4px; }
+    .intention-modal-date { font-size: 0.75rem; color: #aaa; margin-bottom: 16px; }
+    .intention-input-row { display: flex; gap: 8px; margin-bottom: 18px; }
+    .intention-input-row input {
+      flex: 1; border: 1.5px solid #ddd; border-radius: 10px;
+      padding: 9px 14px; font-size: 0.9rem; font-family: inherit;
+      outline: none; transition: border-color 0.2s;
+    }
+    .intention-input-row input:focus { border-color: #7A9EC6; }
+    .intention-set-btn {
+      background: linear-gradient(135deg, #7A9EC6, #96B5D5);
+      color: white; border: none; border-radius: 10px;
+      padding: 9px 18px; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: opacity 0.2s; white-space: nowrap;
+    }
+    .intention-set-btn:hover { opacity: 0.88; }
+    .intention-section-label {
+      font-size: 0.65rem; color: #aaa; text-transform: uppercase;
+      letter-spacing: 0.07em; font-weight: 600; margin-bottom: 8px;
+    }
+    .suggestions-grid { display: flex; flex-direction: column; gap: 5px; margin-bottom: 18px; }
+    .suggestion-item {
+      background: #f4f8fd; border: 1.5px solid #E2EEF5; border-radius: 8px;
+      padding: 8px 12px; font-size: 0.83rem; color: #4a6a8a;
+      cursor: pointer; transition: all 0.15s; font-family: inherit; text-align: left;
+    }
+    .suggestion-item:hover { background: #dceaf5; border-color: #96B5D5; color: #2a4a6a; }
+    .saved-intentions-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .saved-intention-item {
+      display: flex; align-items: center; gap: 8px;
+      background: #fafafa; border: 1.5px solid #eee; border-radius: 8px;
+      padding: 8px 10px; transition: border-color 0.15s;
+    }
+    .saved-intention-item:hover { border-color: #C5D8E8; }
+    .saved-intention-text {
+      flex: 1; font-size: 0.83rem; color: #4a5568; cursor: pointer;
+      font-style: italic;
+    }
+    .saved-intention-text:hover { color: #7A9EC6; }
+    .heart-btn {
+      background: none; border: none; font-size: 1rem; cursor: pointer;
+      padding: 2px 4px; border-radius: 6px; transition: transform 0.15s;
+      flex-shrink: 0; line-height: 1;
+    }
+    .heart-btn:hover { transform: scale(1.2); }
+    .del-intention-btn {
+      background: none; border: none; color: #ddd; font-size: 0.8rem;
+      cursor: pointer; padding: 2px 4px; border-radius: 6px;
+      transition: color 0.15s; flex-shrink: 0; line-height: 1;
+    }
+    .del-intention-btn:hover { color: #e05252; }
+    .intention-empty-saved { font-size: 0.82rem; color: #ccc; font-style: italic; padding: 6px 2px; }
+    .intention-close-btn {
+      width: 100%; background: #f0f0f8; color: #999; border: none; border-radius: 10px;
+      padding: 9px; font-size: 0.88rem; cursor: pointer; font-family: inherit; transition: background 0.2s;
+      margin-top: 4px;
+    }
+    .intention-close-btn:hover { background: #e5e4f0; color: #666; }
+
     /* ── Day view ── */
     .day-view { display: flex; flex-direction: column; gap: 4px; }
 
@@ -273,6 +383,8 @@
       transition: box-shadow 0.15s;
     }
     .day-card:hover { box-shadow: 0 2px 8px rgba(122,158,198,0.12); }
+    .day-card.dragging { opacity: 0.35; }
+    .day-card.drag-over { border-top: 2px solid #7A9EC6; background: #E2EEF5; }
 
     .day-card-emoji { font-size: 0.7rem; flex-shrink: 0; line-height: 1; }
     .day-card-name { font-size: 0.8rem; font-weight: 400; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -396,8 +508,33 @@
     </div>
   </div>
 
+  <div class="intention-bar" id="intention-bar">
+    <span class="intention-icon">🌸</span>
+    <div class="intention-text-area">
+      <div class="intention-label">Today's Intention</div>
+      <div class="intention-today empty" id="intention-display">What is your intention for today?</div>
+    </div>
+    <span class="intention-edit-hint">✎ tap to set</span>
+  </div>
+
   <div id="view-container"></div>
 </main>
+
+<div class="intention-modal-overlay hidden" id="intention-overlay">
+  <div class="intention-modal">
+    <h2>🌸 Set Your Intention</h2>
+    <div class="intention-modal-date" id="intention-modal-date"></div>
+    <div class="intention-input-row">
+      <input type="text" id="intention-input" placeholder="Type your intention for today…" maxlength="140" />
+      <button class="intention-set-btn" id="intention-set-btn">Set</button>
+    </div>
+    <div class="intention-section-label">Suggestions</div>
+    <div class="suggestions-grid" id="suggestions-grid"></div>
+    <div class="intention-section-label">My Saved Intentions</div>
+    <div class="saved-intentions-list" id="saved-intentions-list"></div>
+    <button class="intention-close-btn" id="intention-close-btn">Close</button>
+  </div>
+</div>
 
 <div class="modal-overlay hidden" id="sync-overlay">
   <div class="sync-modal">
@@ -440,6 +577,13 @@
   let dayOffset        = 0;      // 0 = today
   let openScheduleRows = new Set();
   let editingHabitId   = null;
+
+  // New habit form state (persists across renders)
+  let newHabitScheduleType = 'weekly';
+  let newHabitSelectedDays = [0,1,2,3,4,5,6];
+  let newHabitMonthDays    = [1, 15];
+  let newHabitDraftName    = '';
+  let newHabitDraftEmoji   = '';
 
   // ── Helpers ───────────────────────────────────────────────────────────────────
   function load() {
@@ -599,8 +743,8 @@
       const isOpen    = openScheduleRows.has(h.id);
       const isEditing = editingHabitId === h.id;
 
-      // Hide habits with nothing scheduled in this window (unless being edited)
-      if (!isEditing && !dates.some(d => isScheduledOn(h, d))) return;
+      // Hide habits with nothing scheduled in this window (unless being edited or schedule picker is open)
+      if (!isEditing && !openScheduleRows.has(h.id) && !dates.some(d => isScheduledOn(h, d))) return;
 
       const tr = document.createElement('tr');
       tr.className = 'habit-row' + (isEditing ? ' editing-row' : '');
@@ -754,16 +898,7 @@
     // Add-habit row
     const addRow = document.createElement('tr'); addRow.className = 'add-habit-row';
     const addTd  = document.createElement('td'); addTd.colSpan = 9;
-    addTd.innerHTML = `<div class="add-form">
-      <select class="emoji-picker" id="emoji-select">
-        ${EMOJIS.map(e=>`<option value="${e}">${e}</option>`).join('')}
-      </select>
-      <input type="text" id="new-habit-input" placeholder="Add a new habit…" maxlength="100" />
-      <div class="add-day-sel">
-        ${DAY_SHORT.map((s,i)=>`<button class="add-day-btn on" data-day="${i}" title="${DAYS[i]}">${s}</button>`).join('')}
-      </div>
-      <button class="add-btn" id="add-habit-btn">+ Add</button>
-    </div>`;
+    addTd.innerHTML = buildAddFormHTML();
     addRow.appendChild(addTd); tbody.appendChild(addRow);
 
     // Summary
@@ -773,10 +908,7 @@
     document.getElementById('week-progress-fill').style.width = pct + '%';
     document.getElementById('week-pct').textContent = pct + '% complete';
 
-    // Listeners
-    document.getElementById('add-habit-btn').addEventListener('click', addHabit);
-    document.getElementById('new-habit-input').addEventListener('keydown', e => { if (e.key==='Enter') addHabit(); });
-    document.querySelectorAll('.add-day-btn').forEach(b => b.addEventListener('click', () => b.classList.toggle('on')));
+    wireAddFormListeners();
     wireRowButtons();
   }
 
@@ -826,6 +958,16 @@
 
       const card = document.createElement('div');
       card.className = 'day-card';
+      card.draggable = true;
+      card.dataset.habitId = h.id;
+      card.addEventListener('dragstart', onDayDragStart);
+      card.addEventListener('dragend',   onDayDragEnd);
+      card.addEventListener('dragover',  onDayDragOver);
+      card.addEventListener('dragleave', onDayDragLeave);
+      card.addEventListener('drop',      onDayDrop);
+
+      const handle = document.createElement('span');
+      handle.className = 'drag-handle'; handle.textContent = '⠿'; handle.title = 'Drag to reorder';
 
       const emoji = document.createElement('span');
       emoji.className = 'day-card-emoji'; emoji.textContent = h.emoji;
@@ -838,29 +980,17 @@
       box.dataset.habitId = h.id; box.dataset.dateKey = key;
       box.addEventListener('click', toggleCheck);
 
-      card.appendChild(box); card.appendChild(emoji); card.appendChild(name);
+      card.appendChild(handle); card.appendChild(box); card.appendChild(emoji); card.appendChild(name);
       dv.appendChild(card);
     });
 
     // Add-habit card
     const addCard = document.createElement('div'); addCard.className = 'day-add-card';
-    addCard.innerHTML = `<div class="add-form">
-      <select class="emoji-picker" id="emoji-select">
-        ${EMOJIS.map(e=>`<option value="${e}">${e}</option>`).join('')}
-      </select>
-      <input type="text" id="new-habit-input" placeholder="Add a new habit…" maxlength="100" />
-      <div class="add-day-sel">
-        ${DAY_SHORT.map((s,i)=>`<button class="add-day-btn on" data-day="${i}" title="${DAYS[i]}">${s}</button>`).join('')}
-      </div>
-      <button class="add-btn" id="add-habit-btn">+ Add</button>
-    </div>`;
+    addCard.innerHTML = buildAddFormHTML();
     dv.appendChild(addCard);
     container.appendChild(dv);
 
-    // Listeners
-    document.getElementById('add-habit-btn').addEventListener('click', addHabit);
-    document.getElementById('new-habit-input').addEventListener('keydown', e => { if (e.key==='Enter') addHabit(); });
-    document.querySelectorAll('.add-day-btn').forEach(b => b.addEventListener('click', () => b.classList.toggle('on')));
+    wireAddFormListeners();
   }
 
   // ── Wire row-button listeners (week view only) ────────────────────────────────
@@ -963,14 +1093,75 @@
     save(data); render();
   }
 
+  function buildAddFormHTML() {
+    const isMonthly = newHabitScheduleType === 'monthly';
+    const daysHtml = isMonthly
+      ? `<div class="add-month-sel">${Array.from({length:31},(_,i)=>`<button class="add-mday-btn${newHabitMonthDays.includes(i+1)?' on':''}" data-mday="${i+1}">${i+1}</button>`).join('')}</div>`
+      : `<div class="add-day-sel">${DAY_SHORT.map((s,i)=>`<button class="add-day-btn${newHabitSelectedDays.includes(i)?' on':''}" data-day="${i}" title="${DAYS[i]}">${s}</button>`).join('')}</div>`;
+    return `<div class="add-form">
+      <select class="emoji-picker" id="emoji-select">
+        ${EMOJIS.map(e=>`<option value="${e}"${e===newHabitDraftEmoji?' selected':''}>${e}</option>`).join('')}
+      </select>
+      <input type="text" id="new-habit-input" placeholder="Add a new habit…" maxlength="100" value="${newHabitDraftName.replace(/"/g,'&quot;')}" />
+      <div class="add-sched-row">
+        <div class="add-sched-types">
+          <button class="add-sched-type-btn${newHabitScheduleType==='weekly'?' on':''}" data-type="weekly">Weekly</button>
+          <button class="add-sched-type-btn${newHabitScheduleType==='biweekly'?' on':''}" data-type="biweekly">Every 2 Wks</button>
+          <button class="add-sched-type-btn${newHabitScheduleType==='monthly'?' on':''}" data-type="monthly">Monthly</button>
+        </div>
+        ${daysHtml}
+      </div>
+      <button class="add-btn" id="add-habit-btn">+ Add</button>
+    </div>`;
+  }
+
+  function wireAddFormListeners() {
+    const ni = document.getElementById('new-habit-input');
+    const es = document.getElementById('emoji-select');
+    document.getElementById('add-habit-btn')?.addEventListener('click', addHabit);
+    ni?.addEventListener('keydown', e => { if (e.key==='Enter') addHabit(); });
+    ni?.addEventListener('input',  () => { newHabitDraftName  = ni.value; });
+    es?.addEventListener('change', () => { newHabitDraftEmoji = es.value; });
+    document.querySelectorAll('.add-sched-type-btn').forEach(b => b.addEventListener('click', () => {
+      newHabitDraftName  = document.getElementById('new-habit-input')?.value || newHabitDraftName;
+      newHabitDraftEmoji = document.getElementById('emoji-select')?.value   || newHabitDraftEmoji;
+      newHabitScheduleType = b.dataset.type;
+      render();
+    }));
+    document.querySelectorAll('.add-day-btn').forEach(b => b.addEventListener('click', () => {
+      const day = parseInt(b.dataset.day);
+      b.classList.toggle('on');
+      if (newHabitSelectedDays.includes(day)) newHabitSelectedDays = newHabitSelectedDays.filter(d=>d!==day);
+      else newHabitSelectedDays = [...newHabitSelectedDays, day].sort((a,b)=>a-b);
+    }));
+    document.querySelectorAll('.add-mday-btn').forEach(b => b.addEventListener('click', () => {
+      const mday = parseInt(b.dataset.mday);
+      b.classList.toggle('on');
+      if (newHabitMonthDays.includes(mday)) newHabitMonthDays = newHabitMonthDays.filter(d=>d!==mday);
+      else newHabitMonthDays = [...newHabitMonthDays, mday].sort((a,b)=>a-b);
+    }));
+  }
+
   function addHabit() {
     const input    = document.getElementById('new-habit-input');
     const emojiSel = document.getElementById('emoji-select');
     const name     = input?.value.trim();
     if (!name) { input?.focus(); return; }
-    const selectedDays = [...document.querySelectorAll('.add-day-btn.on')].map(b => parseInt(b.dataset.day));
     const data = load();
-    data.habits.push({ id: Date.now().toString(36), name, emoji: emojiSel.value, days: selectedDays });
+    const hab = { id: Date.now().toString(36), name, emoji: emojiSel.value, scheduleType: newHabitScheduleType };
+    if (newHabitScheduleType === 'monthly') {
+      hab.monthDays = newHabitMonthDays.length ? [...newHabitMonthDays] : [1, 15];
+    } else {
+      hab.days = newHabitSelectedDays.length ? [...newHabitSelectedDays] : [...ALL_DAYS];
+      if (newHabitScheduleType === 'biweekly') hab.biweeklyAnchor = dateKey(today0());
+    }
+    data.habits.push(hab);
+    // Reset form state
+    newHabitScheduleType = 'weekly';
+    newHabitSelectedDays = [0,1,2,3,4,5,6];
+    newHabitMonthDays    = [1, 15];
+    newHabitDraftName    = '';
+    newHabitDraftEmoji   = '';
     save(data); render();
     document.getElementById('new-habit-input')?.focus();
   }
@@ -1001,6 +1192,29 @@
     const moved = data.habits.splice(dragSrcIndex, 1)[0];
     data.habits.splice(destIndex, 0, moved);
     save(data); dragSrcIndex = null; render();
+  }
+
+  // ── Day view drag & drop ─────────────────────────────────────────────────────
+  let dragSrcDayId = null;
+  function onDayDragStart(e) {
+    dragSrcDayId = this.dataset.habitId;
+    this.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', dragSrcDayId);
+  }
+  function onDayDragEnd()  { this.classList.remove('dragging'); document.querySelectorAll('.day-card.drag-over').forEach(c=>c.classList.remove('drag-over')); }
+  function onDayDragOver(e){ e.preventDefault(); e.dataTransfer.dropEffect='move'; document.querySelectorAll('.day-card.drag-over').forEach(c=>c.classList.remove('drag-over')); this.classList.add('drag-over'); }
+  function onDayDragLeave(){ this.classList.remove('drag-over'); }
+  function onDayDrop(e) {
+    e.preventDefault(); this.classList.remove('drag-over');
+    const destId = this.dataset.habitId;
+    if (!dragSrcDayId || dragSrcDayId === destId) return;
+    const data = load();
+    const srcIdx = data.habits.findIndex(h => h.id === dragSrcDayId);
+    const dstIdx = data.habits.findIndex(h => h.id === destId);
+    if (srcIdx === -1 || dstIdx === -1) return;
+    const [moved] = data.habits.splice(srcIdx, 1);
+    data.habits.splice(dstIdx, 0, moved);
+    save(data); dragSrcDayId = null; render();
   }
 
   // ── Cloud Sync (GitHub Gist) ──────────────────────────────────────────────────
@@ -1134,6 +1348,145 @@
     });
   });
 
+  // ── Daily Intentions ─────────────────────────────────────────────────────────
+  const SUGGESTED_INTENTIONS = [
+    "I choose to show up fully today.",
+    "Today I will be kind to myself and others.",
+    "I am grateful for this day and all it brings.",
+    "I choose to focus on what truly matters.",
+    "Today I will move through challenges with grace.",
+    "I am open to growth and new possibilities.",
+    "Today I choose presence over perfection.",
+    "I will trust the process and enjoy the journey.",
+    "Today I bring my best self to everything I do.",
+    "I choose joy, even in the small moments.",
+    "Today I will listen more than I speak.",
+    "I am enough, exactly as I am.",
+    "Today I will celebrate every small win.",
+    "I choose to let go of what I cannot control.",
+    "Today I will be the energy I wish to attract.",
+  ];
+
+  function renderIntentionBar() {
+    const data  = load();
+    const today = dateKey(new Date());
+    const text  = (data.intentions || {})[today] || '';
+    const disp  = document.getElementById('intention-display');
+    const hint  = document.querySelector('.intention-edit-hint');
+    if (!disp) return;
+    if (text) {
+      disp.textContent = text;
+      disp.classList.remove('empty');
+      if (hint) hint.textContent = '✎ edit';
+    } else {
+      disp.textContent = 'What is your intention for today?';
+      disp.classList.add('empty');
+      if (hint) hint.textContent = '✎ tap to set';
+    }
+  }
+
+  function openIntentionModal() {
+    const data  = load();
+    const today = dateKey(new Date());
+    const text  = (data.intentions || {})[today] || '';
+    const inp   = document.getElementById('intention-input');
+    if (inp) inp.value = text;
+    const dateEl = document.getElementById('intention-modal-date');
+    if (dateEl) dateEl.textContent = new Date().toLocaleDateString(undefined, {weekday:'long', month:'long', day:'numeric'});
+
+    // Suggestions
+    const sg = document.getElementById('suggestions-grid');
+    if (sg) {
+      sg.innerHTML = '';
+      SUGGESTED_INTENTIONS.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'suggestion-item';
+        btn.textContent = s;
+        btn.addEventListener('click', () => {
+          const i = document.getElementById('intention-input');
+          if (i) { i.value = s; i.focus(); }
+        });
+        sg.appendChild(btn);
+      });
+    }
+
+    renderSavedIntentions();
+    document.getElementById('intention-overlay').classList.remove('hidden');
+    setTimeout(() => inp?.focus(), 50);
+  }
+
+  function renderSavedIntentions() {
+    const data = load();
+    const saved = (data.savedIntentions || []).slice().sort((a,b) => (b.hearted?1:0)-(a.hearted?1:0));
+    const list = document.getElementById('saved-intentions-list');
+    if (!list) return;
+    list.innerHTML = '';
+    if (!saved.length) {
+      list.innerHTML = '<div class="intention-empty-saved">Your saved intentions will appear here.</div>';
+      return;
+    }
+    saved.forEach(si => {
+      const item = document.createElement('div');
+      item.className = 'saved-intention-item';
+      item.innerHTML = `
+        <span class="saved-intention-text" title="Click to use this intention">${si.text}</span>
+        <button class="heart-btn" data-id="${si.id}" title="${si.hearted ? 'Remove from favorites' : 'Add to favorites'}">${si.hearted ? '❤️' : '🤍'}</button>
+        <button class="del-intention-btn" data-id="${si.id}" title="Remove">✕</button>`;
+      item.querySelector('.saved-intention-text').addEventListener('click', () => {
+        const i = document.getElementById('intention-input');
+        if (i) { i.value = si.text; i.focus(); }
+      });
+      item.querySelector('.heart-btn').addEventListener('click', () => toggleIntentionHeart(si.id));
+      item.querySelector('.del-intention-btn').addEventListener('click', () => deleteIntentionFromList(si.id));
+      list.appendChild(item);
+    });
+  }
+
+  function setTodayIntention() {
+    const inp  = document.getElementById('intention-input');
+    const text = inp?.value.trim();
+    if (!text) { inp?.focus(); return; }
+    const data  = load();
+    if (!data.intentions) data.intentions = {};
+    data.intentions[dateKey(new Date())] = text;
+    // Save to saved list if not already there
+    if (!data.savedIntentions) data.savedIntentions = [];
+    const alreadySaved = data.savedIntentions.some(s => s.text === text);
+    if (!alreadySaved) {
+      data.savedIntentions.push({ id: Date.now().toString(36), text, hearted: false });
+    }
+    save(data);
+    renderIntentionBar();
+    document.getElementById('intention-overlay').classList.add('hidden');
+  }
+
+  function toggleIntentionHeart(id) {
+    const data = load();
+    if (!data.savedIntentions) return;
+    const si = data.savedIntentions.find(s => s.id === id);
+    if (si) si.hearted = !si.hearted;
+    save(data); renderSavedIntentions();
+  }
+
+  function deleteIntentionFromList(id) {
+    const data = load();
+    if (!data.savedIntentions) return;
+    data.savedIntentions = data.savedIntentions.filter(s => s.id !== id);
+    save(data); renderSavedIntentions();
+  }
+
+  // Intention modal wiring
+  document.getElementById('intention-bar').addEventListener('click', openIntentionModal);
+  document.getElementById('intention-set-btn').addEventListener('click', setTodayIntention);
+  document.getElementById('intention-input').addEventListener('keydown', e => { if (e.key === 'Enter') setTodayIntention(); });
+  document.getElementById('intention-close-btn').addEventListener('click', () => {
+    document.getElementById('intention-overlay').classList.add('hidden');
+  });
+  document.getElementById('intention-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('intention-overlay'))
+      document.getElementById('intention-overlay').classList.add('hidden');
+  });
+
   // ── Navigation ────────────────────────────────────────────────────────────────
   document.getElementById('prev-btn').addEventListener('click', () => {
     if (viewMode === 'week') weekOffset--; else dayOffset--; render();
@@ -1161,6 +1514,7 @@
   }
 
   render();
+  renderIntentionBar();
   updateSyncHeaderBtn();
   autoSyncOnLoad();
 </script>
