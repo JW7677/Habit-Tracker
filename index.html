@@ -612,22 +612,11 @@
   <div class="intention-modal">
     <h2>🙏 Three Things I'm Grateful For</h2>
     <div class="intention-modal-date" id="gratitude-modal-date"></div>
-    <div class="sync-field">
-      <label>1.</label>
-      <input type="text" id="gratitude-1" placeholder="I'm grateful for…" maxlength="140" />
+    <div class="intention-input-row">
+      <input type="text" id="gratitude-input" placeholder="I'm grateful for…" maxlength="280" />
+      <button class="intention-set-btn" id="gratitude-save-btn">Save</button>
     </div>
-    <div class="sync-field">
-      <label>2.</label>
-      <input type="text" id="gratitude-2" placeholder="I'm grateful for…" maxlength="140" />
-    </div>
-    <div class="sync-field">
-      <label>3.</label>
-      <input type="text" id="gratitude-3" placeholder="I'm grateful for…" maxlength="140" />
-    </div>
-    <div class="sync-modal-btns" style="margin-top:16px">
-      <button class="intention-set-btn" id="gratitude-save-btn" style="flex:1">Save</button>
-      <button class="sync-close-btn" id="gratitude-close-btn">Close</button>
-    </div>
+    <button class="intention-close-btn" id="gratitude-close-btn">Close</button>
   </div>
 </div>
 
@@ -1632,45 +1621,40 @@
   function renderGratitudeBar() {
     const data  = load();
     const today = dateKey(new Date());
-    const items = (data.gratitude || {})[today] || [];
-    const filled = items.filter(x => x && x.trim()).length;
-    const disp = document.getElementById('gratitude-display');
-    const hint = document.getElementById('gratitude-hint');
+    const text  = (data.gratitude || {})[today] || '';
+    const disp  = document.getElementById('gratitude-display');
+    const hint  = document.getElementById('gratitude-hint');
     if (!disp) return;
-    if (filled === 0) {
+    if (text) {
+      disp.textContent = text;
+      disp.classList.remove('empty');
+      if (hint) hint.textContent = '✎ edit';
+    } else {
       disp.textContent = 'What are you grateful for today?';
       disp.classList.add('empty');
       if (hint) hint.textContent = '✎ tap to add';
-    } else if (filled < 3) {
-      disp.textContent = `${filled} of 3 added — ${items.find(x => x && x.trim())}`;
-      disp.classList.remove('empty');
-      if (hint) hint.textContent = `✎ add ${3 - filled} more`;
-    } else {
-      disp.textContent = items[0];
-      disp.classList.remove('empty');
-      if (hint) hint.textContent = '✎ edit';
     }
   }
 
   function openGratitudeModal() {
     const data  = load();
     const today = dateKey(new Date());
-    const items = (data.gratitude || {})[today] || ['', '', ''];
+    const text  = (data.gratitude || {})[today] || '';
+    const inp   = document.getElementById('gratitude-input');
+    if (inp) inp.value = text;
     const dateEl = document.getElementById('gratitude-modal-date');
     if (dateEl) dateEl.textContent = new Date().toLocaleDateString(undefined, {weekday:'long', month:'long', day:'numeric'});
-    ['1','2','3'].forEach((n, i) => {
-      const inp = document.getElementById(`gratitude-${n}`);
-      if (inp) inp.value = items[i] || '';
-    });
     document.getElementById('gratitude-overlay').classList.remove('hidden');
-    setTimeout(() => document.getElementById('gratitude-1')?.focus(), 50);
+    setTimeout(() => inp?.focus(), 50);
   }
 
   function saveGratitude() {
-    const items = ['1','2','3'].map(n => document.getElementById(`gratitude-${n}`)?.value.trim() || '');
-    const data  = load();
+    const inp  = document.getElementById('gratitude-input');
+    const text = inp?.value.trim();
+    if (!text) { inp?.focus(); return; }
+    const data = load();
     if (!data.gratitude) data.gratitude = {};
-    data.gratitude[dateKey(new Date())] = items;
+    data.gratitude[dateKey(new Date())] = text;
     save(data);
     renderGratitudeBar();
     document.getElementById('gratitude-overlay').classList.add('hidden');
@@ -1678,11 +1662,9 @@
 
   document.getElementById('gratitude-bar').addEventListener('click', openGratitudeModal);
   document.getElementById('gratitude-save-btn').addEventListener('click', saveGratitude);
+  document.getElementById('gratitude-input').addEventListener('keydown', e => { if (e.key === 'Enter') saveGratitude(); });
   document.getElementById('gratitude-close-btn').addEventListener('click', () => document.getElementById('gratitude-overlay').classList.add('hidden'));
   document.getElementById('gratitude-overlay').addEventListener('click', e => { if (e.target === document.getElementById('gratitude-overlay')) document.getElementById('gratitude-overlay').classList.add('hidden'); });
-  ['1','2','3'].forEach(n => {
-    document.getElementById(`gratitude-${n}`)?.addEventListener('keydown', e => { if (e.key === 'Enter') saveGratitude(); });
-  });
 
   // ── Looking Forward ───────────────────────────────────────────────────────────
   function renderLookingForwardBar() {
