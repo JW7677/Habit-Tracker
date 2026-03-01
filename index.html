@@ -65,7 +65,7 @@
     /* Summary bar */
     .summary-bar {
       background: white; border-radius: 10px;
-      padding: 8px 16px; margin-bottom: 12px;
+      padding: 8px 16px; margin-top: 12px;
       display: flex; gap: 14px; align-items: center;
       flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
@@ -285,7 +285,7 @@
     /* ── Intention bar ── */
     .intention-bar {
       background: white; border-radius: 10px;
-      padding: 10px 16px; margin-bottom: 12px;
+      padding: 5px 16px; margin-bottom: 6px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       cursor: pointer; transition: box-shadow 0.2s;
       display: flex; align-items: center; gap: 10px;
@@ -293,9 +293,9 @@
     .intention-bar:hover { box-shadow: 0 3px 14px rgba(122,158,198,0.18); }
     .intention-icon { font-size: 1.1rem; flex-shrink: 0; }
     .intention-text-area { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; }
-    .intention-label { font-size: 0.65rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+    .intention-label { font-size: 0.6rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
     .intention-today {
-      font-size: 0.92rem; color: #4a5568;
+      font-size: 0.82rem; color: #4a5568;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .intention-today.empty { color: #bbb; font-style: normal; }
@@ -391,7 +391,7 @@
 
     /* Checkbox for day view */
     .day-big-check {
-      width: 11px; height: 11px; border-radius: 50%;
+      width: 20px; height: 20px; border-radius: 50%;
       border: 1.5px solid #B8CEDF;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: all 0.2s ease;
@@ -401,7 +401,7 @@
       background: linear-gradient(135deg, #7A9EC6, #96B5D5);
       border-color: transparent;
     }
-    .day-big-check.checked::after { content: '✓'; color: white; font-size: 0.4rem; font-weight: 700; }
+    .day-big-check.checked::after { content: '✓'; color: white; font-size: 0.65rem; font-weight: 700; }
     .day-big-check:hover:not(.checked) { border-color: #96B5D5; background: #f2f7fd; }
 
     /* Day view add habit row */
@@ -410,6 +410,39 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
       padding: 8px 12px;
     }
+    /* ── Delete confirm modal ── */
+    .delete-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .delete-modal-overlay.hidden { display: none; }
+    .delete-modal {
+      background: white; border-radius: 16px; padding: 24px 28px;
+      width: 100%; max-width: 320px; box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    }
+    .delete-modal h3 { font-size: 1rem; font-weight: 700; color: #1e1e2e; margin-bottom: 18px; }
+    .delete-radio-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; }
+    .delete-radio-label {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.9rem; color: #333; cursor: pointer;
+    }
+    .delete-radio-label input[type="radio"] {
+      width: 18px; height: 18px; accent-color: #7A9EC6; cursor: pointer; flex-shrink: 0;
+    }
+    .delete-modal-btns { display: flex; justify-content: flex-end; gap: 8px; }
+    .delete-cancel-btn {
+      background: none; border: none; color: #7A9EC6; font-size: 0.88rem;
+      font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 8px;
+      font-family: inherit; transition: background 0.15s;
+    }
+    .delete-cancel-btn:hover { background: #edf3f8; }
+    .delete-ok-btn {
+      background: #7A9EC6; color: white; border: none; border-radius: 8px;
+      padding: 8px 20px; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: opacity 0.2s;
+    }
+    .delete-ok-btn:hover { opacity: 0.88; }
+
     /* ── Sync ── */
     .sync-header-btn {
       background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
@@ -487,6 +520,35 @@
 </header>
 
 <main>
+  <div class="intention-bar" id="intention-bar">
+    <span class="intention-icon">🌸</span>
+    <div class="intention-text-area">
+      <div class="intention-label">Today's Intention</div>
+      <div class="intention-today empty" id="intention-display">What is your intention for today?</div>
+    </div>
+    <span class="intention-edit-hint">✎ tap to set</span>
+  </div>
+
+  <div class="intention-bar" id="gratitude-bar">
+    <span class="intention-icon">🙏</span>
+    <div class="intention-text-area">
+      <div class="intention-label">Three Things I'm Grateful For</div>
+      <div class="intention-today empty" id="gratitude-display">What are you grateful for today?</div>
+    </div>
+    <span class="intention-edit-hint" id="gratitude-hint">✎ tap to add</span>
+  </div>
+
+  <div class="intention-bar" id="looking-forward-bar">
+    <span class="intention-icon">✨</span>
+    <div class="intention-text-area">
+      <div class="intention-label">Looking Forward To Tomorrow</div>
+      <div class="intention-today empty" id="looking-forward-display">What are you looking forward to?</div>
+    </div>
+    <span class="intention-edit-hint" id="looking-forward-hint">✎ tap to add</span>
+  </div>
+
+  <div id="view-container"></div>
+
   <div class="summary-bar">
     <div class="summary-item">
       <span class="summary-num" id="sum-done">0</span>
@@ -507,17 +569,6 @@
       <div class="progress-pct" id="week-pct">0% complete</div>
     </div>
   </div>
-
-  <div class="intention-bar" id="intention-bar">
-    <span class="intention-icon">🌸</span>
-    <div class="intention-text-area">
-      <div class="intention-label">Today's Intention</div>
-      <div class="intention-today empty" id="intention-display">What is your intention for today?</div>
-    </div>
-    <span class="intention-edit-hint">✎ tap to set</span>
-  </div>
-
-  <div id="view-container"></div>
 </main>
 
 <div class="intention-modal-overlay hidden" id="intention-overlay">
@@ -533,6 +584,62 @@
     <div class="intention-section-label">My Saved Intentions</div>
     <div class="saved-intentions-list" id="saved-intentions-list"></div>
     <button class="intention-close-btn" id="intention-close-btn">Close</button>
+  </div>
+</div>
+
+<div class="delete-modal-overlay hidden" id="delete-confirm-overlay">
+  <div class="delete-modal">
+    <h3>Delete repeating task</h3>
+    <div class="delete-radio-group">
+      <label class="delete-radio-label">
+        <input type="radio" name="delete-scope" value="this" checked /> This task
+      </label>
+      <label class="delete-radio-label">
+        <input type="radio" name="delete-scope" value="following" /> This and following tasks
+      </label>
+      <label class="delete-radio-label">
+        <input type="radio" name="delete-scope" value="all" /> All tasks
+      </label>
+    </div>
+    <div class="delete-modal-btns">
+      <button class="delete-cancel-btn" id="delete-cancel-btn">Cancel</button>
+      <button class="delete-ok-btn" id="delete-ok-btn">OK</button>
+    </div>
+  </div>
+</div>
+
+<div class="intention-modal-overlay hidden" id="gratitude-overlay">
+  <div class="intention-modal">
+    <h2>🙏 Three Things I'm Grateful For</h2>
+    <div class="intention-modal-date" id="gratitude-modal-date"></div>
+    <div class="sync-field">
+      <label>1.</label>
+      <input type="text" id="gratitude-1" placeholder="I'm grateful for…" maxlength="140" />
+    </div>
+    <div class="sync-field">
+      <label>2.</label>
+      <input type="text" id="gratitude-2" placeholder="I'm grateful for…" maxlength="140" />
+    </div>
+    <div class="sync-field">
+      <label>3.</label>
+      <input type="text" id="gratitude-3" placeholder="I'm grateful for…" maxlength="140" />
+    </div>
+    <div class="sync-modal-btns" style="margin-top:16px">
+      <button class="intention-set-btn" id="gratitude-save-btn" style="flex:1">Save</button>
+      <button class="sync-close-btn" id="gratitude-close-btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="intention-modal-overlay hidden" id="looking-forward-overlay">
+  <div class="intention-modal">
+    <h2>✨ Looking Forward To Tomorrow</h2>
+    <div class="intention-modal-date" id="looking-forward-modal-date"></div>
+    <div class="intention-input-row">
+      <input type="text" id="looking-forward-input" placeholder="I'm looking forward to…" maxlength="140" />
+      <button class="intention-set-btn" id="looking-forward-save-btn">Save</button>
+    </div>
+    <button class="intention-close-btn" id="looking-forward-close-btn">Close</button>
   </div>
 </div>
 
@@ -572,11 +679,15 @@
                      '💻','🖥️','⌨️','🖱️'];
   const ALL_DAYS  = [0,1,2,3,4,5,6];
 
-  let viewMode         = 'week'; // 'week' | 'day'
+  let viewMode         = 'day'; // 'week' | 'day'
   let weekOffset       = 0;      // 0 = window starting yesterday
   let dayOffset        = 0;      // 0 = today
   let openScheduleRows = new Set();
   let editingHabitId   = null;
+
+  // Delete confirmation state
+  let deleteTargetId   = null;
+  let deleteContextDate = null;
 
   // New habit form state (persists across renders)
   let newHabitScheduleType = 'weekly';
@@ -595,6 +706,9 @@
 
   // Returns true if habit h should be done on date d
   function isScheduledOn(h, date) {
+    const dk = dateKey(date);
+    if (h.endDate && dk >= h.endDate) return false;
+    if (Array.isArray(h.skipped) && h.skipped.includes(dk)) return false;
     const type = h.scheduleType || 'weekly';
     if (type === 'monthly') {
       return (Array.isArray(h.monthDays) ? h.monthDays : []).includes(date.getDate());
@@ -1167,11 +1281,37 @@
   }
 
   function deleteHabit(id) {
-    openScheduleRows.delete(id);
-    if (editingHabitId === id) editingHabitId = null;
+    deleteTargetId    = id;
+    deleteContextDate = viewMode === 'day' ? dateKey(getDayDate(dayOffset)) : dateKey(today0());
+    // Reset radio to first option
+    const radios = document.querySelectorAll('input[name="delete-scope"]');
+    if (radios.length) radios[0].checked = true;
+    document.getElementById('delete-confirm-overlay').classList.remove('hidden');
+  }
+
+  function confirmDeleteAction() {
+    const scope = document.querySelector('input[name="delete-scope"]:checked')?.value || 'all';
+    const id    = deleteTargetId;
+    const ctx   = deleteContextDate;
+    if (!id) return;
     const data = load();
-    data.habits = data.habits.filter(h => h.id !== id);
-    save(data); render();
+    const h = data.habits.find(x => x.id === id);
+    if (h) {
+      if (scope === 'this') {
+        if (!Array.isArray(h.skipped)) h.skipped = [];
+        if (!h.skipped.includes(ctx)) h.skipped.push(ctx);
+      } else if (scope === 'following') {
+        h.endDate = ctx;
+      } else {
+        openScheduleRows.delete(id);
+        if (editingHabitId === id) editingHabitId = null;
+        data.habits = data.habits.filter(x => x.id !== id);
+      }
+    }
+    save(data);
+    deleteTargetId = null; deleteContextDate = null;
+    document.getElementById('delete-confirm-overlay').classList.add('hidden');
+    render();
   }
 
   // ── Drag & drop ───────────────────────────────────────────────────────────────
@@ -1475,6 +1615,128 @@
     save(data); renderSavedIntentions();
   }
 
+  // Delete confirm modal wiring
+  document.getElementById('delete-ok-btn').addEventListener('click', confirmDeleteAction);
+  document.getElementById('delete-cancel-btn').addEventListener('click', () => {
+    document.getElementById('delete-confirm-overlay').classList.add('hidden');
+    deleteTargetId = null; deleteContextDate = null;
+  });
+  document.getElementById('delete-confirm-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('delete-confirm-overlay')) {
+      document.getElementById('delete-confirm-overlay').classList.add('hidden');
+      deleteTargetId = null; deleteContextDate = null;
+    }
+  });
+
+  // ── Gratitude ─────────────────────────────────────────────────────────────────
+  function renderGratitudeBar() {
+    const data  = load();
+    const today = dateKey(new Date());
+    const items = (data.gratitude || {})[today] || [];
+    const filled = items.filter(x => x && x.trim()).length;
+    const disp = document.getElementById('gratitude-display');
+    const hint = document.getElementById('gratitude-hint');
+    if (!disp) return;
+    if (filled === 0) {
+      disp.textContent = 'What are you grateful for today?';
+      disp.classList.add('empty');
+      if (hint) hint.textContent = '✎ tap to add';
+    } else if (filled < 3) {
+      disp.textContent = `${filled} of 3 added — ${items.find(x => x && x.trim())}`;
+      disp.classList.remove('empty');
+      if (hint) hint.textContent = `✎ add ${3 - filled} more`;
+    } else {
+      disp.textContent = items[0];
+      disp.classList.remove('empty');
+      if (hint) hint.textContent = '✎ edit';
+    }
+  }
+
+  function openGratitudeModal() {
+    const data  = load();
+    const today = dateKey(new Date());
+    const items = (data.gratitude || {})[today] || ['', '', ''];
+    const dateEl = document.getElementById('gratitude-modal-date');
+    if (dateEl) dateEl.textContent = new Date().toLocaleDateString(undefined, {weekday:'long', month:'long', day:'numeric'});
+    ['1','2','3'].forEach((n, i) => {
+      const inp = document.getElementById(`gratitude-${n}`);
+      if (inp) inp.value = items[i] || '';
+    });
+    document.getElementById('gratitude-overlay').classList.remove('hidden');
+    setTimeout(() => document.getElementById('gratitude-1')?.focus(), 50);
+  }
+
+  function saveGratitude() {
+    const items = ['1','2','3'].map(n => document.getElementById(`gratitude-${n}`)?.value.trim() || '');
+    const data  = load();
+    if (!data.gratitude) data.gratitude = {};
+    data.gratitude[dateKey(new Date())] = items;
+    save(data);
+    renderGratitudeBar();
+    document.getElementById('gratitude-overlay').classList.add('hidden');
+  }
+
+  document.getElementById('gratitude-bar').addEventListener('click', openGratitudeModal);
+  document.getElementById('gratitude-save-btn').addEventListener('click', saveGratitude);
+  document.getElementById('gratitude-close-btn').addEventListener('click', () => document.getElementById('gratitude-overlay').classList.add('hidden'));
+  document.getElementById('gratitude-overlay').addEventListener('click', e => { if (e.target === document.getElementById('gratitude-overlay')) document.getElementById('gratitude-overlay').classList.add('hidden'); });
+  ['1','2','3'].forEach(n => {
+    document.getElementById(`gratitude-${n}`)?.addEventListener('keydown', e => { if (e.key === 'Enter') saveGratitude(); });
+  });
+
+  // ── Looking Forward ───────────────────────────────────────────────────────────
+  function renderLookingForwardBar() {
+    const data  = load();
+    const tomorrow = dateKey(new Date(today0().getTime() + 86400000));
+    const text  = (data.lookingForward || {})[tomorrow] || '';
+    const disp  = document.getElementById('looking-forward-display');
+    const hint  = document.getElementById('looking-forward-hint');
+    if (!disp) return;
+    if (text) {
+      disp.textContent = text;
+      disp.classList.remove('empty');
+      if (hint) hint.textContent = '✎ edit';
+    } else {
+      disp.textContent = 'What are you looking forward to?';
+      disp.classList.add('empty');
+      if (hint) hint.textContent = '✎ tap to add';
+    }
+  }
+
+  function openLookingForwardModal() {
+    const data     = load();
+    const tomorrow = dateKey(new Date(today0().getTime() + 86400000));
+    const text     = (data.lookingForward || {})[tomorrow] || '';
+    const inp      = document.getElementById('looking-forward-input');
+    if (inp) inp.value = text;
+    const dateEl = document.getElementById('looking-forward-modal-date');
+    if (dateEl) {
+      const tom = new Date(today0()); tom.setDate(tom.getDate() + 1);
+      dateEl.textContent = tom.toLocaleDateString(undefined, {weekday:'long', month:'long', day:'numeric'});
+    }
+    document.getElementById('looking-forward-overlay').classList.remove('hidden');
+    setTimeout(() => inp?.focus(), 50);
+  }
+
+  function saveLookingForward() {
+    const inp  = document.getElementById('looking-forward-input');
+    const text = inp?.value.trim();
+    if (!text) { inp?.focus(); return; }
+    const data     = load();
+    const tomorrow = dateKey(new Date(today0().getTime() + 86400000));
+    if (!data.lookingForward) data.lookingForward = {};
+    data.lookingForward[tomorrow] = text;
+    save(data);
+    renderLookingForwardBar();
+    document.getElementById('looking-forward-overlay').classList.add('hidden');
+  }
+
+  document.getElementById('looking-forward-bar').addEventListener('click', openLookingForwardModal);
+  document.getElementById('looking-forward-save-btn').addEventListener('click', saveLookingForward);
+  document.getElementById('looking-forward-input').addEventListener('keydown', e => { if (e.key === 'Enter') saveLookingForward(); });
+  document.getElementById('looking-forward-close-btn').addEventListener('click', () => document.getElementById('looking-forward-overlay').classList.add('hidden'));
+  document.getElementById('looking-forward-overlay').addEventListener('click', e => { if (e.target === document.getElementById('looking-forward-overlay')) document.getElementById('looking-forward-overlay').classList.add('hidden'); });
+
   // Intention modal wiring
   document.getElementById('intention-bar').addEventListener('click', openIntentionModal);
   document.getElementById('intention-set-btn').addEventListener('click', setTodayIntention);
@@ -1515,6 +1777,8 @@
 
   render();
   renderIntentionBar();
+  renderGratitudeBar();
+  renderLookingForwardBar();
   updateSyncHeaderBtn();
   autoSyncOnLoad();
 </script>
