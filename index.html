@@ -38,7 +38,24 @@
     .week-nav button:hover { background: rgba(255,255,255,0.35); }
     #week-label { font-size: 1rem; font-weight: 600; min-width: 220px; text-align: center; }
 
-    /* View toggle */
+    /* Header left grouping */
+    .header-left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+    /* Top-level mode toggle (Habits | Calendar) */
+    .mode-toggle {
+      display: flex; background: rgba(255,255,255,0.15);
+      border-radius: 20px; padding: 3px; gap: 2px;
+    }
+    .mt-btn {
+      background: none; border: none; color: rgba(255,255,255,0.75);
+      padding: 5px 16px; border-radius: 16px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .mt-btn:hover { color: white; }
+    .mt-btn.active { background: white; color: #7A9EC6; }
+
+    /* View toggle (Week | Day) */
     .view-toggle {
       display: flex; background: rgba(255,255,255,0.15);
       border-radius: 20px; padding: 3px; gap: 2px;
@@ -51,6 +68,7 @@
     }
     .vt-btn:hover { color: white; }
     .vt-btn.active { background: white; color: #7A9EC6; }
+    .view-toggle.hidden { display: none; }
 
     .today-btn {
       background: rgba(255,255,255,0.2);
@@ -410,6 +428,7 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
       padding: 8px 12px;
     }
+
     /* ── Delete confirm modal ── */
     .delete-modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000;
@@ -500,18 +519,21 @@
       cursor: pointer; font-family: inherit; transition: background 0.2s;
     }
     .sync-close-btn:hover { background: #e5e4f0; color: #666; }
+
   </style>
 </head>
 <body>
 
 <header>
-  <h1>✨ Habit Tracker</h1>
+  <div class="header-left">
+    <h1>✨ Habit Tracker</h1>
+  </div>
   <div class="week-nav">
     <button id="prev-btn" title="Previous">&#8592;</button>
     <span id="week-label"></span>
     <button id="next-btn" title="Next">&#8594;</button>
   </div>
-  <div class="view-toggle">
+  <div class="view-toggle" id="habit-view-toggle">
     <button class="vt-btn active" id="vt-week">Week</button>
     <button class="vt-btn" id="vt-day">Day</button>
   </div>
@@ -668,9 +690,9 @@
                      '💻','🖥️','⌨️','🖱️'];
   const ALL_DAYS  = [0,1,2,3,4,5,6];
 
-  let viewMode         = 'day'; // 'week' | 'day'
-  let weekOffset       = 0;      // 0 = window starting yesterday
-  let dayOffset        = 0;      // 0 = today
+  let viewMode         = 'day';    // 'week' | 'day'
+  let weekOffset       = 0;        // 0 = window starting yesterday
+  let dayOffset        = 0;        // 0 = today
   let openScheduleRows = new Set();
   let editingHabitId   = null;
 
@@ -703,11 +725,11 @@
       return (Array.isArray(h.monthDays) ? h.monthDays : []).includes(date.getDate());
     }
     if (!habitDays(h).includes(dayIdx(date))) return false;
-    if (type === 'biweekly') {
+    if (type === 'biweekly' || type === 'fourweekly') {
       const anchor = new Date((h.biweeklyAnchor || dateKey(today0())) + 'T00:00:00');
       const monOf = d => { const m = new Date(d); m.setDate(d.getDate() - dayIdx(d)); return m; };
       const weekDiff = Math.round((monOf(date) - monOf(anchor)) / 604800000);
-      return weekDiff % 2 === 0;
+      return weekDiff % (type === 'fourweekly' ? 4 : 2) === 0;
     }
     return true; // weekly
   }
@@ -786,12 +808,14 @@
     const data = load();
     document.getElementById('sum-streak').textContent = calcBestStreak(data) + '🔥';
 
-    // Sync toggle button states
+    // Sync mode button states
+
+    // Sync view button states
     document.getElementById('vt-week').classList.toggle('active', viewMode === 'week');
     document.getElementById('vt-day').classList.toggle('active',  viewMode === 'day');
 
-    if (viewMode === 'week') renderWeekView(data);
-    else                     renderDayView(data);
+    if (viewMode === 'week')   renderWeekView(data);
+    else                       renderDayView(data);
   }
 
   // ── Week view ─────────────────────────────────────────────────────────────────
@@ -947,9 +971,10 @@
 
         let html = `<div class="sched-type-row">
           <span class="day-picker-label">Repeats</span>
-          <button class="sched-type-btn${schedType==='weekly'?' active':''}"   data-type="weekly"   data-id="${h.id}">Weekly</button>
-          <button class="sched-type-btn${schedType==='biweekly'?' active':''}" data-type="biweekly" data-id="${h.id}">Every 2 Weeks</button>
-          <button class="sched-type-btn${schedType==='monthly'?' active':''}"  data-type="monthly"  data-id="${h.id}">Monthly Dates</button>
+          <button class="sched-type-btn${schedType==='weekly'?' active':''}"      data-type="weekly"      data-id="${h.id}">Weekly</button>
+          <button class="sched-type-btn${schedType==='biweekly'?' active':''}"   data-type="biweekly"   data-id="${h.id}">Every 2 Weeks</button>
+          <button class="sched-type-btn${schedType==='fourweekly'?' active':''}" data-type="fourweekly" data-id="${h.id}">Every 4 Weeks</button>
+          <button class="sched-type-btn${schedType==='monthly'?' active':''}"    data-type="monthly"    data-id="${h.id}">Monthly Dates</button>
         </div>`;
 
         if (schedType === 'monthly') {
@@ -963,7 +988,7 @@
           DAYS.forEach((name, i) => {
             html += `<button class="day-toggle${hDays.includes(i)?' on':''}" data-day="${i}" data-id="${h.id}" title="${name}">${DAY_SHORT[i]}</button>`;
           });
-          if (schedType === 'biweekly') {
+          if (schedType === 'biweekly' || schedType === 'fourweekly') {
             const anchor = h.biweeklyAnchor || dateKey(today0());
             html += `<span class="biweekly-note">starting week of ${new Date(anchor+'T00:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span>`;
           }
@@ -1170,9 +1195,9 @@
     const h = data.habits.find(x => x.id === id);
     if (!h) return;
     h.scheduleType = newType;
-    if (newType === 'biweekly' && !h.biweeklyAnchor) h.biweeklyAnchor = dateKey(today0());
+    if ((newType === 'biweekly' || newType === 'fourweekly') && !h.biweeklyAnchor) h.biweeklyAnchor = dateKey(today0());
     if (newType === 'monthly'  && !Array.isArray(h.monthDays)) h.monthDays = [1, 15];
-    if ((newType === 'weekly' || newType === 'biweekly') && !Array.isArray(h.days)) h.days = [...ALL_DAYS];
+    if ((newType === 'weekly' || newType === 'biweekly' || newType === 'fourweekly') && !Array.isArray(h.days)) h.days = [...ALL_DAYS];
     save(data); render();
   }
 
@@ -1210,6 +1235,7 @@
         <div class="add-sched-types">
           <button class="add-sched-type-btn${newHabitScheduleType==='weekly'?' on':''}" data-type="weekly">Weekly</button>
           <button class="add-sched-type-btn${newHabitScheduleType==='biweekly'?' on':''}" data-type="biweekly">Every 2 Wks</button>
+          <button class="add-sched-type-btn${newHabitScheduleType==='fourweekly'?' on':''}" data-type="fourweekly">Every 4 Wks</button>
           <button class="add-sched-type-btn${newHabitScheduleType==='monthly'?' on':''}" data-type="monthly">Monthly</button>
         </div>
         ${daysHtml}
@@ -1256,7 +1282,7 @@
       hab.monthDays = newHabitMonthDays.length ? [...newHabitMonthDays] : [1, 15];
     } else {
       hab.days = newHabitSelectedDays.length ? [...newHabitSelectedDays] : [...ALL_DAYS];
-      if (newHabitScheduleType === 'biweekly') hab.biweeklyAnchor = dateKey(today0());
+      if (newHabitScheduleType === 'biweekly' || newHabitScheduleType === 'fourweekly') hab.biweeklyAnchor = dateKey(today0());
     }
     data.habits.push(hab);
     // Reset form state
@@ -1731,12 +1757,21 @@
       document.getElementById('intention-overlay').classList.add('hidden');
   });
 
+
+  // Calendar state
+  let calEditingEvent  = null; // for modal editing mode
+
+
   // ── Navigation ────────────────────────────────────────────────────────────────
   document.getElementById('prev-btn').addEventListener('click', () => {
-    if (viewMode === 'week') weekOffset--; else dayOffset--; render();
+    if (viewMode === 'week') weekOffset--;
+    else dayOffset--;
+    render();
   });
   document.getElementById('next-btn').addEventListener('click', () => {
-    if (viewMode === 'week') weekOffset++; else dayOffset++; render();
+    if (viewMode === 'week') weekOffset++;
+    else dayOffset++;
+    render();
   });
   document.getElementById('go-today').addEventListener('click', () => {
     weekOffset = 0; dayOffset = 0; render();
@@ -1763,7 +1798,9 @@
   renderLookingForwardBar();
   updateSyncHeaderBtn();
   autoSyncOnLoad();
+
 </script>
+
 
 </body>
 </html>
