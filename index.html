@@ -98,7 +98,7 @@
     }
     .progress-pct { font-size: 0.7rem; color: #666; margin-top: 3px; text-align: right; }
 
-    /* ââ Week view ââ */
+    /* ── Week view ── */
     .tracker-card {
       background: white; border-radius: 16px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden;
@@ -145,7 +145,7 @@
       background: white; position: relative; flex-shrink: 0;
     }
     .custom-check.checked { background: linear-gradient(135deg, #7A9EC6, #96B5D5); border-color: transparent; }
-    .custom-check.checked::after { content: 'â'; color: white; font-size: 0.55rem; font-weight: 700; }
+    .custom-check.checked::after { content: '✓'; color: white; font-size: 0.55rem; font-weight: 700; }
     .custom-check:hover:not(.checked) { border-color: #96B5D5; background: #f2f7fd; }
     .cell-inactive { color: #d8d8e8; font-size: 0.8rem; user-select: none; }
 
@@ -300,7 +300,7 @@
     .edit-cancel-btn:hover { background: #e5e4f0; color: #666; }
     tr.editing-row td { background: #f2f7fd !important; }
 
-    /* ââ Intention bar ââ */
+    /* ── Intention bar ── */
     .intention-bar {
       background: white; border-radius: 10px;
       padding: 5px 16px; margin-bottom: 6px;
@@ -389,7 +389,7 @@
     }
     .intention-close-btn:hover { background: #e5e4f0; color: #666; }
 
-    /* ââ Day view ââ */
+    /* ── Day view ── */
     .day-view { display: flex; flex-direction: column; gap: 4px; }
 
     .day-card {
@@ -419,7 +419,7 @@
       background: linear-gradient(135deg, #7A9EC6, #96B5D5);
       border-color: transparent;
     }
-    .day-big-check.checked::after { content: 'â'; color: white; font-size: 0.65rem; font-weight: 700; }
+    .day-big-check.checked::after { content: '✓'; color: white; font-size: 0.65rem; font-weight: 700; }
     .day-big-check:hover:not(.checked) { border-color: #96B5D5; background: #f2f7fd; }
 
     /* Day view add habit row */
@@ -429,7 +429,7 @@
       padding: 8px 12px;
     }
 
-    /* ââ Delete confirm modal ââ */
+    /* ── Delete confirm modal ── */
     .delete-modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000;
       display: flex; align-items: center; justify-content: center; padding: 20px;
@@ -462,7 +462,7 @@
     }
     .delete-ok-btn:hover { opacity: 0.88; }
 
-    /* ââ Sync ââ */
+    /* ── Sync ── */
     .sync-header-btn {
       background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
       color: white; padding: 5px 13px; border-radius: 20px;
@@ -525,13 +525,13 @@
 <body>
 
 <div style="background:#1a3a5c;color:#e8f0f8;text-align:center;padding:8px 16px;font-family:'Segoe UI',system-ui,sans-serif;font-size:0.85rem;letter-spacing:0.02em;">
-  âï¸ <strong>Pentagon / Anthropic Claude Ban</strong> &nbsp;â&nbsp; Daily News Digest &nbsp;
-  <a href="https://jw7677.github.io/" target="_blank" style="color:#c8a84b;font-weight:700;text-decoration:none;border-bottom:1px solid #c8a84b;">Read Today's Update â</a>
+  ⚖️ <strong>Pentagon / Anthropic Claude Ban</strong> &nbsp;—&nbsp; Daily News Digest &nbsp;
+  <a href="https://jw7677.github.io/" target="_blank" style="color:#c8a84b;font-weight:700;text-decoration:none;border-bottom:1px solid #c8a84b;">Read Today's Update →</a>
 </div>
 
 <header>
   <div class="header-left">
-    <h1>â¨ Habit Tracker</h1>
+    <h1>✨ Habit Tracker</h1>
   </div>
   <div class="week-nav">
     <button id="prev-btn" title="Previous">&#8592;</button>
@@ -543,35 +543,35 @@
     <button class="vt-btn" id="vt-day">Day</button>
   </div>
   <button class="today-btn" id="go-today">Today</button>
-  <button class="sync-header-btn" id="sync-header-btn" title="Set up cross-device sync">âï¸ Sync</button>
+  <button class="sync-header-btn" id="sync-header-btn" title="Set up cross-device sync">☁️ Sync</button>
 </header>
 
 <main>
   <div class="intention-bar" id="intention-bar">
-    <span class="intention-icon">ð¸</span>
+    <span class="intention-icon">🌸</span>
     <div class="intention-text-area">
       <div class="intention-label">Today's Intention</div>
       <div class="intention-today empty" id="intention-display">What is your intention for today?</div>
     </div>
-    <span class="intention-edit-hint">â tap to set</span>
+    <span class="intention-edit-hint">✎ tap to set</span>
   </div>
 
   <div class="intention-bar" id="gratitude-bar">
-    <span class="intention-icon">ð</span>
+    <span class="intention-icon">🙏</span>
     <div class="intention-text-area">
       <div class="intention-label">Three Things I'm Grateful For</div>
       <div class="intention-today empty" id="gratitude-display">What are you grateful for today?</div>
     </div>
-    <span class="intention-edit-hint" id="gratitude-hint">â tap to add</span>
+    <span class="intention-edit-hint" id="gratitude-hint">✎ tap to add</span>
   </div>
 
   <div class="intention-bar" id="looking-forward-bar">
-    <span class="intention-icon">â¨</span>
+    <span class="intention-icon">✨</span>
     <div class="intention-text-area">
       <div class="intention-label">Looking Forward To Tomorrow</div>
       <div class="intention-today empty" id="looking-forward-display">What are you looking forward to?</div>
     </div>
-    <span class="intention-edit-hint" id="looking-forward-hint">â tap to add</span>
+    <span class="intention-edit-hint" id="looking-forward-hint">✎ tap to add</span>
   </div>
 
   <div id="view-container"></div>
@@ -586,7 +586,7 @@
       <span class="summary-label" id="sum-total-label">Scheduled</span>
     </div>
     <div class="summary-item">
-      <span class="summary-num" id="sum-streak">0ð¥</span>
+      <span class="summary-num" id="sum-streak">0🔥</span>
       <span class="summary-label">Best streak</span>
     </div>
     <div class="progress-wrap">
@@ -600,10 +600,10 @@
 
 <div class="intention-modal-overlay hidden" id="intention-overlay">
   <div class="intention-modal">
-    <h2>ð¸ Set Your Intention</h2>
+    <h2>🌸 Set Your Intention</h2>
     <div class="intention-modal-date" id="intention-modal-date"></div>
     <div class="intention-input-row">
-      <input type="text" id="intention-input" placeholder="Type your intention for todayâ¦" maxlength="140" />
+      <input type="text" id="intention-input" placeholder="Type your intention for today…" maxlength="140" />
       <button class="intention-set-btn" id="intention-set-btn">Set</button>
     </div>
     <div class="intention-section-label">Suggestions</div>
@@ -637,10 +637,10 @@
 
 <div class="intention-modal-overlay hidden" id="gratitude-overlay">
   <div class="intention-modal">
-    <h2>ð Three Things I'm Grateful For</h2>
+    <h2>🙏 Three Things I'm Grateful For</h2>
     <div class="intention-modal-date" id="gratitude-modal-date"></div>
     <div class="intention-input-row">
-      <input type="text" id="gratitude-input" placeholder="I'm grateful forâ¦" maxlength="280" />
+      <input type="text" id="gratitude-input" placeholder="I'm grateful for…" maxlength="280" />
       <button class="intention-set-btn" id="gratitude-save-btn">Save</button>
     </div>
     <button class="intention-close-btn" id="gratitude-close-btn">Close</button>
@@ -649,10 +649,10 @@
 
 <div class="intention-modal-overlay hidden" id="looking-forward-overlay">
   <div class="intention-modal">
-    <h2>â¨ Looking Forward To Tomorrow</h2>
+    <h2>✨ Looking Forward To Tomorrow</h2>
     <div class="intention-modal-date" id="looking-forward-modal-date"></div>
     <div class="intention-input-row">
-      <input type="text" id="looking-forward-input" placeholder="I'm looking forward toâ¦" maxlength="140" />
+      <input type="text" id="looking-forward-input" placeholder="I'm looking forward to…" maxlength="140" />
       <button class="intention-set-btn" id="looking-forward-save-btn">Save</button>
     </div>
     <button class="intention-close-btn" id="looking-forward-close-btn">Close</button>
@@ -661,19 +661,19 @@
 
 <div class="modal-overlay hidden" id="sync-overlay">
   <div class="sync-modal">
-    <h2>âï¸ Cross-Device Sync</h2>
+    <h2>☁️ Cross-Device Sync</h2>
     <p class="sync-desc">
       Sync your habits across all your devices using <a href="https://github.com" target="_blank">GitHub</a> (free).
-      Go to <strong>github.com â Settings â Developer settings â Personal access tokens â Tokens (classic)</strong>,
+      Go to <strong>github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)</strong>,
       generate a token with only the <strong>gist</strong> scope checked, and paste it below.
-      Your data is saved as a private Gist â only you can see it.
+      Your data is saved as a private Gist — only you can see it.
     </p>
     <div class="sync-field">
       <label>GitHub Personal Access Token</label>
-      <input type="password" id="sync-key-input" placeholder="ghp_â¦" autocomplete="off" />
+      <input type="password" id="sync-key-input" placeholder="ghp_…" autocomplete="off" />
     </div>
     <div class="sync-field">
-      <label>Sync ID <span style="font-weight:400;text-transform:none;font-size:0.73rem;color:#ccc">â copy this to your other devices</span></label>
+      <label>Sync ID <span style="font-weight:400;text-transform:none;font-size:0.73rem;color:#ccc">— copy this to your other devices</span></label>
       <div class="sync-input-row">
         <input type="text" id="sync-bin-input" placeholder="Auto-generated on first connect" />
         <button class="copy-id-btn" id="copy-id-btn">Copy</button>
@@ -690,9 +690,9 @@
 <script>
   const DAYS      = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   const DAY_SHORT = ['M','T','W','T','F','S','S'];
-  const EMOJIS    = ['â','ð','ð','ð§','ð§','ð','ð´','ðª','ð¯','ðï¸','ð¿','ðµ','ð§¹','ð','â¤ï¸',
-                     'ð§µ','ðª¡','ð§¶','âï¸','ð¨','ð¼ï¸','ðª¢','ð§·','ð','ðª','ð·','ð¸','ð','ð¿','ð®','ð§¬',
-                     'ð»','ð¥ï¸','â¨ï¸','ð±ï¸'];
+  const EMOJIS    = ['✅','🏃','📚','💧','🧘','🍎','😴','💪','🎯','🖊️','🌿','🎵','🧹','💊','❤️',
+                     '🧵','🪡','🧶','✂️','🎨','🖼️','🪢','🧷','💎','🪟','📷','📸','💍','📿','🔮','🧬',
+                     '💻','🖥️','⌨️','🖱️'];
   const ALL_DAYS  = [0,1,2,3,4,5,6];
 
   let viewMode         = 'day';    // 'week' | 'day'
@@ -712,7 +712,7 @@
   let newHabitDraftName    = '';
   let newHabitDraftEmoji   = '';
 
-  // ââ Helpers âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Helpers ───────────────────────────────────────────────────────────────────
   function load() {
     return JSON.parse(localStorage.getItem('habitTrackerData') || '{"habits":[],"checks":{}}');
   }
@@ -739,7 +739,7 @@
     return true; // weekly
   }
 
-  // Mon=0 â¦ Sun=6
+  // Mon=0 … Sun=6
   function dayIdx(d) { return (d.getDay() + 6) % 7; }
   function dayAbbr(d) { return DAYS[dayIdx(d)]; }
 
@@ -766,16 +766,16 @@
 
   function fmtWeekLabel(dates) {
     const opts = {month:'short', day:'numeric'};
-    return `${dates[0].toLocaleDateString(undefined, opts)} â ${dates[6].toLocaleDateString(undefined, opts)}, ${dates[0].getFullYear()}`;
+    return `${dates[0].toLocaleDateString(undefined, opts)} – ${dates[6].toLocaleDateString(undefined, opts)}, ${dates[0].getFullYear()}`;
   }
 
   function fmtDayLabel(d) {
     const opts = {weekday:'long', month:'long', day:'numeric'};
-    if (isToday(d)) return 'Today â ' + d.toLocaleDateString(undefined, {month:'long', day:'numeric'});
+    if (isToday(d)) return 'Today — ' + d.toLocaleDateString(undefined, {month:'long', day:'numeric'});
     const yest = new Date(today0()); yest.setDate(yest.getDate() - 1);
-    if (dateKey(d) === dateKey(yest)) return 'Yesterday â ' + d.toLocaleDateString(undefined, {month:'long', day:'numeric'});
+    if (dateKey(d) === dateKey(yest)) return 'Yesterday — ' + d.toLocaleDateString(undefined, {month:'long', day:'numeric'});
     const tom  = new Date(today0()); tom.setDate(tom.getDate() + 1);
-    if (dateKey(d) === dateKey(tom))  return 'Tomorrow â '  + d.toLocaleDateString(undefined, {month:'long', day:'numeric'});
+    if (dateKey(d) === dateKey(tom))  return 'Tomorrow — '  + d.toLocaleDateString(undefined, {month:'long', day:'numeric'});
     return d.toLocaleDateString(undefined, opts);
   }
 
@@ -808,10 +808,10 @@
     return globalBest;
   }
 
-  // ââ Main render dispatcher ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Main render dispatcher ────────────────────────────────────────────────────
   function render() {
     const data = load();
-    document.getElementById('sum-streak').textContent = calcBestStreak(data) + 'ð¥';
+    document.getElementById('sum-streak').textContent = calcBestStreak(data) + '🔥';
 
     // Sync mode button states
 
@@ -823,7 +823,7 @@
     else                       renderDayView(data);
   }
 
-  // ââ Week view âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Week view ─────────────────────────────────────────────────────────────────
   function renderWeekView(data) {
     const dates = getWeekDates(weekOffset);
     document.getElementById('week-label').textContent = fmtWeekLabel(dates);
@@ -864,7 +864,7 @@
     if (!data.habits.length) {
       const tr = document.createElement('tr');
       const td = document.createElement('td'); td.colSpan = 9;
-      td.innerHTML = `<div class="empty-state"><div class="emoji">ð±</div><p>No habits yet â add one below!</p></div>`;
+      td.innerHTML = `<div class="empty-state"><div class="emoji">🌱</div><p>No habits yet — add one below!</p></div>`;
       tr.appendChild(td); tbody.appendChild(tr);
     }
 
@@ -912,8 +912,8 @@
           </select>
           <input class="edit-input" id="edit-name-${h.id}"
             type="text" value="${h.name.replace(/"/g,'&quot;')}" maxlength="100" />
-          <button class="edit-save-btn"   data-id="${h.id}">â Save</button>
-          <button class="edit-cancel-btn" data-id="${h.id}">â</button>
+          <button class="edit-save-btn"   data-id="${h.id}">✓ Save</button>
+          <button class="edit-cancel-btn" data-id="${h.id}">✕</button>
         </div>`;
         tr.appendChild(tdName);
       } else {
@@ -924,16 +924,16 @@
         }).join('');
 
         tdName.innerHTML = `<div class="habit-row-inner">
-          <span class="drag-handle" title="Drag to reorder">â ¿</span>
+          <span class="drag-handle" title="Drag to reorder">⠿</span>
           <span class="habit-emoji">${h.emoji}</span>
           <div>
             <div>${h.name}</div>
             <div class="row-progress">${dots}</div>
           </div>
           <div class="row-btns">
-            <button class="icon-btn edit-btn"   data-id="${h.id}" title="Edit">âï¸</button>
-            <button class="icon-btn sched-btn${isOpen?' active':''}" data-id="${h.id}" title="Schedule">ð</button>
-            <button class="icon-btn delete-btn" data-id="${h.id}" title="Delete">â</button>
+            <button class="icon-btn edit-btn"   data-id="${h.id}" title="Edit">✏️</button>
+            <button class="icon-btn sched-btn${isOpen?' active':''}" data-id="${h.id}" title="Schedule">📅</button>
+            <button class="icon-btn delete-btn" data-id="${h.id}" title="Delete">✕</button>
           </div>
         </div>`;
         tr.appendChild(tdName);
@@ -946,7 +946,7 @@
           td.className = 'check-cell' + (isToday(d) ? ' today-col' : '');
 
           if (!isScheduledOn(h, d)) {
-            td.innerHTML = `<span class="cell-inactive">â</span>`;
+            td.innerHTML = `<span class="cell-inactive">–</span>`;
           } else {
             const box = document.createElement('div');
             box.className = 'custom-check' + (data.checks[key]?.[h.id] ? ' checked' : '');
@@ -1021,7 +1021,7 @@
         });
         const td = document.createElement('td');
         td.className = isToday(d) ? 'today-col' : '';
-        td.textContent = total ? `${done}/${total}` : 'â';
+        td.textContent = total ? `${done}/${total}` : '–';
         totRow.appendChild(td);
       });
       totRow.appendChild(document.createElement('td'));
@@ -1045,7 +1045,7 @@
     wireRowButtons();
   }
 
-  // ââ Day view ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Day view ──────────────────────────────────────────────────────────────────
   function renderDayView(data) {
     const d   = getDayDate(dayOffset);
     const di  = dayIdx(d);
@@ -1078,8 +1078,8 @@
       const empty = document.createElement('div');
       empty.className = 'day-card';
       const msg = data.habits.length
-        ? 'ð Nothing scheduled for today â enjoy the day off!'
-        : 'ð± No habits yet â switch to Week view to add some!';
+        ? '🎉 Nothing scheduled for today — enjoy the day off!'
+        : '🌱 No habits yet — switch to Week view to add some!';
       empty.innerHTML = `<div class="empty-state" style="width:100%"><p>${msg}</p></div>`;
       dv.appendChild(empty);
     }
@@ -1100,7 +1100,7 @@
       card.addEventListener('drop',      onDayDrop);
 
       const handle = document.createElement('span');
-      handle.className = 'drag-handle'; handle.textContent = 'â ¿'; handle.title = 'Drag to reorder';
+      handle.className = 'drag-handle'; handle.textContent = '⠿'; handle.title = 'Drag to reorder';
 
       const emoji = document.createElement('span');
       emoji.className = 'day-card-emoji'; emoji.textContent = h.emoji;
@@ -1126,7 +1126,7 @@
     wireAddFormListeners();
   }
 
-  // ââ Wire row-button listeners (week view only) ââââââââââââââââââââââââââââââââ
+  // ── Wire row-button listeners (week view only) ────────────────────────────────
   function wireRowButtons() {
     document.querySelectorAll('.edit-btn').forEach(btn => {
       btn.addEventListener('click', e => {
@@ -1175,7 +1175,7 @@
     });
   }
 
-  // ââ Actions âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Actions ───────────────────────────────────────────────────────────────────
   function toggleCheck(e) {
     const {habitId, dateKey: dk} = e.currentTarget.dataset;
     const data = load();
@@ -1235,7 +1235,7 @@
       <select class="emoji-picker" id="emoji-select">
         ${EMOJIS.map(e=>`<option value="${e}"${e===newHabitDraftEmoji?' selected':''}>${e}</option>`).join('')}
       </select>
-      <input type="text" id="new-habit-input" placeholder="Add a new habitâ¦" maxlength="100" value="${newHabitDraftName.replace(/"/g,'&quot;')}" />
+      <input type="text" id="new-habit-input" placeholder="Add a new habit…" maxlength="100" value="${newHabitDraftName.replace(/"/g,'&quot;')}" />
       <div class="add-sched-row">
         <div class="add-sched-types">
           <button class="add-sched-type-btn${newHabitScheduleType==='weekly'?' on':''}" data-type="weekly">Weekly</button>
@@ -1334,7 +1334,7 @@
     render();
   }
 
-  // ââ Drag & drop âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Drag & drop ───────────────────────────────────────────────────────────────
   let dragSrcIndex = null;
   function onDragStart(e) {
     dragSrcIndex = parseInt(this.dataset.habitIndex);
@@ -1354,7 +1354,7 @@
     save(data); dragSrcIndex = null; render();
   }
 
-  // ââ Day view drag & drop âââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Day view drag & drop ─────────────────────────────────────────────────────
   let dragSrcDayId = null;
   function onDayDragStart(e) {
     dragSrcDayId = this.dataset.habitId;
@@ -1377,7 +1377,7 @@
     save(data); dragSrcDayId = null; render();
   }
 
-  // ââ Cloud Sync (GitHub Gist) ââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Cloud Sync (GitHub Gist) ──────────────────────────────────────────────────
   const GIST_API = 'https://api.github.com/gists';
   const GIST_FILE = 'habit-tracker-data.json';
   let syncKey   = localStorage.getItem('hSyncKey') || '';
@@ -1389,7 +1389,7 @@
     clearTimeout(syncTimer);
     syncTimer = setTimeout(async () => {
       try { await cloudUpdate(load()); }
-      catch { /* silent â will retry on next save */ }
+      catch { /* silent – will retry on next save */ }
     }, 1500);
   }
 
@@ -1429,7 +1429,7 @@
   function updateSyncHeaderBtn() {
     const btn = document.getElementById('sync-header-btn');
     if (!btn) return;
-    btn.textContent = (syncKey && syncBinId) ? 'â Sync' : 'âï¸ Sync';
+    btn.textContent = (syncKey && syncBinId) ? '✅ Sync' : '☁️ Sync';
   }
 
   async function handleSyncConnect() {
@@ -1438,8 +1438,8 @@
     if (!key) { setSyncStatus('Please enter your GitHub Personal Access Token.', 'err'); return; }
     syncKey = key; localStorage.setItem('hSyncKey', key);
     const btn = document.getElementById('sync-go-btn');
-    if (btn) { btn.disabled = true; btn.textContent = 'Connectingâ¦'; }
-    setSyncStatus('Connectingâ¦');
+    if (btn) { btn.disabled = true; btn.textContent = 'Connecting…'; }
+    setSyncStatus('Connecting…');
     try {
       if (bid) {
         syncBinId = bid; localStorage.setItem('hSyncBin', bid);
@@ -1447,10 +1447,10 @@
         const local = load();
         if (cloud.lastModified && (!local.lastModified || cloud.lastModified > local.lastModified)) {
           saveLocal(cloud); render();
-          setSyncStatus('â Connected! Cloud data was newer â loaded successfully.', 'ok');
+          setSyncStatus('✓ Connected! Cloud data was newer — loaded successfully.', 'ok');
         } else {
           await cloudUpdate(local);
-          setSyncStatus('â Connected! Your local data was synced to the cloud.', 'ok');
+          setSyncStatus('✓ Connected! Your local data was synced to the cloud.', 'ok');
         }
       } else {
         const data = load(); data.lastModified = Date.now(); saveLocal(data);
@@ -1458,11 +1458,11 @@
         localStorage.setItem('hSyncBin', syncBinId);
         const binInput = document.getElementById('sync-bin-input');
         if (binInput) binInput.value = syncBinId;
-        setSyncStatus('â Sync set up! Copy your Sync ID above and enter it on your other devices.', 'ok');
+        setSyncStatus('✓ Sync set up! Copy your Sync ID above and enter it on your other devices.', 'ok');
       }
       updateSyncHeaderBtn();
     } catch (e) {
-      setSyncStatus('â ' + e.message + ' â double-check your Master Key and try again.', 'err');
+      setSyncStatus('✗ ' + e.message + ' — double-check your Master Key and try again.', 'err');
     } finally {
       if (btn) { btn.disabled = false; btn.textContent = 'Connect & Sync'; }
     }
@@ -1486,7 +1486,7 @@
     const ki = document.getElementById('sync-key-input'); if (ki) ki.value = syncKey;
     const bi = document.getElementById('sync-bin-input'); if (bi) bi.value = syncBinId;
     setSyncStatus(
-      syncKey && syncBinId ? 'â Sync is active. Your data saves to the cloud automatically.' : 'Enter your Master Key and click Connect.',
+      syncKey && syncBinId ? '✓ Sync is active. Your data saves to the cloud automatically.' : 'Enter your Master Key and click Connect.',
       syncKey && syncBinId ? 'ok' : ''
     );
   });
@@ -1508,7 +1508,7 @@
     });
   });
 
-  // ââ Daily Intentions âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Daily Intentions ─────────────────────────────────────────────────────────
   const SUGGESTED_INTENTIONS = [
     "I choose to show up fully today.",
     "Today I will be kind to myself and others.",
@@ -1537,11 +1537,11 @@
     if (text) {
       disp.textContent = text;
       disp.classList.remove('empty');
-      if (hint) hint.textContent = 'â edit';
+      if (hint) hint.textContent = '✎ edit';
     } else {
       disp.textContent = 'What is your intention for today?';
       disp.classList.add('empty');
-      if (hint) hint.textContent = 'â tap to set';
+      if (hint) hint.textContent = '✎ tap to set';
     }
   }
 
@@ -1590,8 +1590,8 @@
       item.className = 'saved-intention-item';
       item.innerHTML = `
         <span class="saved-intention-text" title="Click to use this intention">${si.text}</span>
-        <button class="heart-btn" data-id="${si.id}" title="${si.hearted ? 'Remove from favorites' : 'Add to favorites'}">${si.hearted ? 'â¤ï¸' : 'ð¤'}</button>
-        <button class="del-intention-btn" data-id="${si.id}" title="Remove">â</button>`;
+        <button class="heart-btn" data-id="${si.id}" title="${si.hearted ? 'Remove from favorites' : 'Add to favorites'}">${si.hearted ? '❤️' : '🤍'}</button>
+        <button class="del-intention-btn" data-id="${si.id}" title="Remove">✕</button>`;
       item.querySelector('.saved-intention-text').addEventListener('click', () => {
         const i = document.getElementById('intention-input');
         if (i) { i.value = si.text; i.focus(); }
@@ -1648,7 +1648,7 @@
     }
   });
 
-  // ââ Gratitude âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Gratitude ─────────────────────────────────────────────────────────────────
   function renderGratitudeBar() {
     const data  = load();
     const today = dateKey(new Date());
@@ -1659,11 +1659,11 @@
     if (text) {
       disp.textContent = text;
       disp.classList.remove('empty');
-      if (hint) hint.textContent = 'â edit';
+      if (hint) hint.textContent = '✎ edit';
     } else {
       disp.textContent = 'What are you grateful for today?';
       disp.classList.add('empty');
-      if (hint) hint.textContent = 'â tap to add';
+      if (hint) hint.textContent = '✎ tap to add';
     }
   }
 
@@ -1697,7 +1697,7 @@
   document.getElementById('gratitude-close-btn').addEventListener('click', () => document.getElementById('gratitude-overlay').classList.add('hidden'));
   document.getElementById('gratitude-overlay').addEventListener('click', e => { if (e.target === document.getElementById('gratitude-overlay')) document.getElementById('gratitude-overlay').classList.add('hidden'); });
 
-  // ââ Looking Forward âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Looking Forward ───────────────────────────────────────────────────────────
   function renderLookingForwardBar() {
     const data  = load();
     const tomorrow = dateKey(new Date(today0().getTime() + 86400000));
@@ -1708,11 +1708,11 @@
     if (text) {
       disp.textContent = text;
       disp.classList.remove('empty');
-      if (hint) hint.textContent = 'â edit';
+      if (hint) hint.textContent = '✎ edit';
     } else {
       disp.textContent = 'What are you looking forward to?';
       disp.classList.add('empty');
-      if (hint) hint.textContent = 'â tap to add';
+      if (hint) hint.textContent = '✎ tap to add';
     }
   }
 
@@ -1767,7 +1767,7 @@
   let calEditingEvent  = null; // for modal editing mode
 
 
-  // ââ Navigation ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Navigation ────────────────────────────────────────────────────────────────
   document.getElementById('prev-btn').addEventListener('click', () => {
     if (viewMode === 'week') weekOffset--;
     else dayOffset--;
@@ -1784,14 +1784,14 @@
   document.getElementById('vt-week').addEventListener('click', () => { viewMode = 'week'; render(); });
   document.getElementById('vt-day').addEventListener('click',  () => { viewMode = 'day';  render(); });
 
-  // ââ Seed defaults âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── Seed defaults ─────────────────────────────────────────────────────────────
   const existing = load();
   if (!existing.habits.length) {
     const defaults = [
-      { emoji: 'ð§', name: 'Drink 8 glasses of water', days: ALL_DAYS },
-      { emoji: 'ð', name: 'Exercise 30 minutes',      days: [0,1,2,3,4] },
-      { emoji: 'ð', name: 'Read for 20 minutes',      days: ALL_DAYS },
-      { emoji: 'ð´', name: 'Sleep by 10:30 pm',        days: ALL_DAYS },
+      { emoji: '💧', name: 'Drink 8 glasses of water', days: ALL_DAYS },
+      { emoji: '🏃', name: 'Exercise 30 minutes',      days: [0,1,2,3,4] },
+      { emoji: '📚', name: 'Read for 20 minutes',      days: ALL_DAYS },
+      { emoji: '😴', name: 'Sleep by 10:30 pm',        days: ALL_DAYS },
     ];
     existing.habits = defaults.map(d => ({ ...d, id: Math.random().toString(36).slice(2) }));
     save(existing);
